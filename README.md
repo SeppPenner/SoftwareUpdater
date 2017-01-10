@@ -59,7 +59,8 @@ The config file needs to be named "UpdateConfig.xml".
 </Config>
 ```
 
-An example project can be found [here]().
+An example project can be found [here](https://github.com/SeppPenner/SoftwareUpdater/tree/master/Sourcecode).
+A testsetup can be found [here](https://github.com/SeppPenner/SoftwareUpdater/tree/master/Testsetup).
 
 Change history
 --------------
