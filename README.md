@@ -4,6 +4,9 @@ SoftwareUpdater
 SoftwareUpdater is an executable to update other software.
 The assembly was written and tested in .Net 4.6.2.
 
+## Screenshot from the executable german:
+![Screenshot from the executable](https://github.com/SeppPenner/SoftwareUpdater/blob/master/Screenshot.png "Screenshot from the executable")
+
 ## Basic usage:
 The PathToLatestVersion property needs to be set to the path to where
 the newest executable is located, e.g. a server share, etc.
