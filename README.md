@@ -4,6 +4,8 @@ SoftwareUpdater
 SoftwareUpdater is an executable to update other software.
 The assembly was written and tested in .Net 4.6.2.
 
+[![Build status](https://ci.appveyor.com/api/projects/status/vgx29eqgt9ply7b7?svg=true)](https://ci.appveyor.com/project/SeppPenner/softwareupdater)
+
 ## Screenshot from the executable:
 ![Screenshot from the executable](https://github.com/SeppPenner/SoftwareUpdater/blob/master/Screenshot.png "Screenshot from the executable")
 
