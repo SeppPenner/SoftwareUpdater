@@ -68,11 +68,8 @@ An example project can be found [here](https://github.com/SeppPenner/SoftwareUpd
 A test setup can be found [here](https://github.com/SeppPenner/SoftwareUpdater/tree/master/Testsetup).
 
 ## Special advice:
-If the executable is located under **C:\Program Files** or **C:\Program Files (x86)**, **admin rights**
+If the executable is located under **C:\Program Files** or **C:\Program Files (x86)**, **ADMIN RIGHTS**
 will be needed to use the updater properly. Otherwise it will not perform an update.
-
-
-C:\Program Files
 
 Change history
 --------------
