@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
+using System.Security.Principal;
 using System.Timers;
 using System.Windows.Forms;
 using SoftwareUpdater.Configuration;
@@ -31,13 +33,35 @@ namespace SoftwareUpdater
             {
                 _config = _getConfig.ImportConfiguration(_updateXml);
                 pictureBox_Splash.Image = Image.FromFile(_splashImage);
+                CheckAdminPrivileges();
                 StartTimer();
             }
             catch
             {
-                Process.Start(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _config.MainExecutable.FileName));
+                var location = Assembly.GetExecutingAssembly().Location;
+                if (location != null)
+                {
+                    var mainExecutable = Path.Combine(Directory.GetParent(location).FullName,
+                        _config.MainExecutable.FileName);
+                    Process.Start(mainExecutable);
+                }
                 Exit();
             }
+        }
+
+        private void CheckAdminPrivileges()
+        {
+            if (IsElevated()) return;
+            MessageBox.Show(@"The updater needs to be run in admin mode to work properly",
+                @"Please run the updater in admin mode",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Exit();
+        }
+
+        private bool IsElevated()
+        {
+            var id = WindowsIdentity.GetCurrent();
+            return id.Owner != id.User;
         }
 
         private void StartTimer()
