@@ -6,6 +6,8 @@ using System.Reflection;
 using System.Security.Principal;
 using System.Timers;
 using System.Windows.Forms;
+using Languages.Implementation;
+using Languages.Interfaces;
 using SoftwareUpdater.Configuration;
 using SoftwareUpdater.Implementation;
 using SoftwareUpdater.Interface;
@@ -16,15 +18,35 @@ namespace SoftwareUpdater
     public partial class Splash : Form
     {
         private readonly IGetConfig _getConfig = new GetConfig();
-        private readonly string _splashImage = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Splash.jpg");
+        private readonly ILanguageManager _lm = new LanguageManager();
         private readonly Timer _timer = new Timer();
-        private readonly string _updateXml = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "UpdateConfig.xml");
+        private string _baseDirectory;
         private Config _config = new Config();
+        private Language _lang;
+        private string _splashImage;
+        private string _updateXml;
 
         public Splash()
         {
             InitializeComponent();
+            LoadPaths();
             LoadSplash();
+        }
+
+        private void LoadPaths()
+        {
+            try
+            {
+                var location = Assembly.GetExecutingAssembly().Location;
+                if (location == null) throw new ArgumentNullException(nameof(_baseDirectory));
+                _baseDirectory = Directory.GetParent(location).FullName;
+                _splashImage = Path.Combine(_baseDirectory, "Splash.jpg");
+                _updateXml = Path.Combine(_baseDirectory, "UpdateConfig.xml");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.StackTrace, ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void LoadSplash()
@@ -33,28 +55,37 @@ namespace SoftwareUpdater
             {
                 _config = _getConfig.ImportConfiguration(_updateXml);
                 pictureBox_Splash.Image = Image.FromFile(_splashImage);
+                InitializeLanguageManager();
                 CheckAdminPrivileges();
                 StartTimer();
             }
             catch
             {
-                var location = Assembly.GetExecutingAssembly().Location;
-                if (location != null)
-                {
-                    var mainExecutable = Path.Combine(Directory.GetParent(location).FullName,
-                        _config.MainExecutable.FileName);
-                    Process.Start(mainExecutable);
-                }
+                var mainExecutable = Path.Combine(_baseDirectory, _config.MainExecutable.FileName);
+                Process.Start(mainExecutable);
                 Exit();
             }
+        }
+
+
+        private void InitializeLanguageManager()
+        {
+            _lm.SetCurrentLanguageFromName(_config.PreferredLanguage);
+            _lm.OnLanguageChanged += OnLanguageChanged;
+            _lang = _lm.GetCurrentLanguage();
+        }
+
+        private void OnLanguageChanged(object sender, EventArgs eventArgs)
+        {
+            _lang = _lm.GetCurrentLanguage();
         }
 
         private void CheckAdminPrivileges()
         {
             if (IsElevated()) return;
-            MessageBox.Show(@"The updater needs to be run in admin mode to work properly",
-                @"Please run the updater in admin mode",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            var message = _lang.GetWord("RunInAdminModeMessage");
+            var title = _lang.GetWord("RunInAdminModeTitle");
+            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
             Exit();
         }
 
@@ -75,55 +106,67 @@ namespace SoftwareUpdater
         {
             try
             {
-                CheckFiles();
+                CopyFilesIfNecessary();
+                RestartFiles();
             }
             catch
             {
-                var mainExecutable = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _config.MainExecutable.FileName);
+                var mainExecutable = Path.Combine(_baseDirectory, _config.MainExecutable.FileName);
                 Process.Start(mainExecutable);
                 Exit();
             }
         }
 
-        private void CheckFiles()
+        private void CopyFilesIfNecessary()
         {
+            CopySingleFileIfNecessary(_config.MainExecutable);
             foreach (var file in _config.Files)
-                CheckSingleFile(file);
+                CopySingleFileIfNecessary(file);
         }
 
-        private void CheckSingleFile(FileModel file)
+        private void CopySingleFileIfNecessary(FileModel file)
         {
             if (!NewFileVersionExists(file)) return;
-            CopyFiles();
-            RestartFiles();
+            CopyFile(file);
         }
 
         private bool NewFileVersionExists(FileModel file)
         {
-            var oldFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, file.FileName);
+            var oldFile = Path.Combine(_baseDirectory, file.FileName);
             var newFile = Path.Combine(_config.PathToLatestVersion, file.FileName);
             var oldFileInfo = FileVersionInfo.GetVersionInfo(oldFile).FileVersion;
             var newFileInfo = FileVersionInfo.GetVersionInfo(newFile).FileVersion;
+            if (oldFileInfo == null || newFileInfo == null) return false;
             return !oldFileInfo.Equals(newFileInfo) &&
                    !File.GetLastWriteTime(oldFile).Equals(File.GetLastWriteTime(newFile));
         }
 
-        private void CopyFiles()
+        private void CopyFile(FileModel file)
         {
-            foreach (var file in _config.Files)
-            {
-                var currentFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, file.FileName);
-                var newFile = Path.Combine(_config.PathToLatestVersion, file.FileName);
-                File.Delete(currentFile);
-                File.Copy(newFile, currentFile);
-            }
+            var currentFile = Path.Combine(_baseDirectory, file.FileName);
+            var newFile = Path.Combine(_config.PathToLatestVersion, file.FileName);
+            File.Delete(currentFile);
+            File.Copy(newFile, currentFile);
         }
 
         private void RestartFiles()
         {
+            RestartOtherFiles();
+            RestartMainExecutable();
+            Exit();
+        }
+
+        private void RestartMainExecutable()
+        {
+            if (_config.MainExecutable.StartAgain)
+                Process.Start(Path.Combine(_baseDirectory, _config.MainExecutable.FileName));
+        }
+
+        private void RestartOtherFiles()
+        {
             foreach (var file in _config.Files)
                 if (file.StartAgain)
-                    Process.Start(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, file.FileName));
+                    Process.Start(Path.Combine(_baseDirectory, file.FileName));
         }
 
         private static void Exit()

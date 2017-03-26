@@ -10,6 +10,13 @@ The assembly was written and tested in .Net 4.6.2.
 ![Screenshot from the executable](https://github.com/SeppPenner/SoftwareUpdater/blob/master/Screenshot.png "Screenshot from the executable")
 
 ## Basic usage:
+The PreferredLanguage property needs to be set to the language that is wanted.
+See the languages subfolder in the execution location (to add new languages)
+and the language manager: https://github.com/SeppPenner/CSharpLanguageManager
+```xml
+<PreferredLanguage>Deutsch</PreferredLanguage>
+```
+
 The PathToLatestVersion property needs to be set to the path to where
 the newest executable is located, e.g. a server share, etc.
 ```xml
@@ -41,7 +48,30 @@ if they should be restarted after the update.
 </Files>
 ```
 
-## How the full configuration needs to look like:
+## How the full configuration needs to look like (Version 1.0.0.2):
+The config file needs to be named "UpdateConfig.xml".
+```xml
+<?xml version="1.0"?>
+<Config>
+	<PreferredLanguage>Deutsch</PreferredLanguage>
+	<PathToLatestVersion>C:\Users\asdf\Desktop\Test</PathToLatestVersion>
+	<MainExecutable>
+		<FileName>MainExecutable.exe</FileName>
+		<StartAgain>true</StartAgain>
+	</MainExecutable>
+	<Files>
+		<FileModel>
+			<FileName>SecondExe.exe</FileName>
+			<StartAgain>false</StartAgain>
+		</FileModel>
+		<FileModel>
+			<FileName>Changelog.txt</FileName>
+			<StartAgain>true</StartAgain>
+		</FileModel>
+	</Files>
+</Config>
+```
+## How the full configuration needs to look like (Version 1.0.0.1 and prior):
 The config file needs to be named "UpdateConfig.xml".
 ```xml
 <?xml version="1.0"?>
@@ -74,5 +104,6 @@ will be needed to use the updater properly. Otherwise it will not perform an upd
 Change history
 --------------
 
+* **Version 1.0.0.2 (2017-03-26)** : Multiple bug fixes.
 * **Version 1.0.0.1 (2017-03-24)** : Added check for admin privileges.
 * **Version 1.0.0.0 (2017-01-10)** : 1.0 release.

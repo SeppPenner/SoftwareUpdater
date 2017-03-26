@@ -7,5 +7,7 @@ namespace SoftwareUpdater.Configuration
         public string PathToLatestVersion { get; set; }
         public List<FileModel> Files { get; set; }
         public FileModel MainExecutable { get; set; }
+
+        public string PreferredLanguage { get; set; }
     }
 }
