@@ -2,7 +2,7 @@ SoftwareUpdater
 ====================================
 
 SoftwareUpdater is an executable to update other software.
-The assembly was written and tested in .Net 4.6.2.
+The assembly was written and tested in .Net 4.7.
 
 [![Build status](https://ci.appveyor.com/api/projects/status/vgx29eqgt9ply7b7?svg=true)](https://ci.appveyor.com/project/SeppPenner/softwareupdater)
 
@@ -104,6 +104,7 @@ will be needed to use the updater properly. Otherwise it will not perform an upd
 Change history
 --------------
 
+* **Version 1.0.0.3 (2018-01-21)** : Updated to .Net 4.7.
 * **Version 1.0.0.2 (2017-03-26)** : Multiple bug fixes.
 * **Version 1.0.0.1 (2017-03-24)** : Added check for admin privileges.
 * **Version 1.0.0.0 (2017-01-10)** : 1.0 release.
