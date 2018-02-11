@@ -22,7 +22,7 @@ namespace SoftwareUpdater
         private readonly Timer _timer = new Timer();
         private string _baseDirectory;
         private Config _config = new Config();
-        private Language _lang;
+        private ILanguage _lang;
         private string _splashImage;
         private string _updateXml;
 
