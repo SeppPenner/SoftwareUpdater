@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <Config>
-	<PreferredLanguage>Deutsch</PreferredLanguage>
-	<PathToLatestVersion>C:\Users\tim\Desktop\SoftwareUpdater\Testsetup\Test</PathToLatestVersion>
+	<PathToLatestVersion>C:\Users\asdf\Desktop\Test</PathToLatestVersion>
 	<MainExecutable>
 		<FileName>MainExecutable.exe</FileName>
 		<StartAgain>true</StartAgain>
