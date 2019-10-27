@@ -109,6 +109,7 @@ will be needed to use the updater properly. Otherwise it will not perform an upd
 Change history
 --------------
 
+* **Version 1.0.1.0 (2019-10-27)** : Updated nuget packages, added GitVersionTask.
 * **Version 1.0.0.4 (2019-05-07)** : Updated .Net version to 4.8.
 * **Version 1.0.0.3 (2018-01-21)** : Updated to .Net 4.7.
 * **Version 1.0.0.2 (2017-03-26)** : Multiple bug fixes.
