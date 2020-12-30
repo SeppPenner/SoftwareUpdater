@@ -2,7 +2,7 @@ SoftwareUpdater
 ====================================
 
 SoftwareUpdater is an executable to update other software.
-The assembly was written and tested in .Net 4.8.
+The assembly was written and tested in .Net 5.0.
 
 [![Build status](https://ci.appveyor.com/api/projects/status/vgx29eqgt9ply7b7?svg=true)](https://ci.appveyor.com/project/SeppPenner/softwareupdater)
 [![GitHub issues](https://img.shields.io/github/issues/SeppPenner/SoftwareUpdater.svg)](https://github.com/SeppPenner/SoftwareUpdater/issues)
@@ -109,9 +109,4 @@ will be needed to use the updater properly. Otherwise it will not perform an upd
 Change history
 --------------
 
-* **Version 1.0.1.0 (2019-10-27)** : Updated nuget packages, added GitVersionTask.
-* **Version 1.0.0.4 (2019-05-07)** : Updated .Net version to 4.8.
-* **Version 1.0.0.3 (2018-01-21)** : Updated to .Net 4.7.
-* **Version 1.0.0.2 (2017-03-26)** : Multiple bug fixes.
-* **Version 1.0.0.1 (2017-03-24)** : Added check for admin privileges.
-* **Version 1.0.0.0 (2017-01-10)** : 1.0 release.
+See the [Changelog](https://github.com/SeppPenner/SoftwareUpdater/blob/master/Changelog.md).
