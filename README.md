@@ -11,10 +11,10 @@ The assembly was written and tested in .Net 5.0.
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://raw.githubusercontent.com/SeppPenner/SoftwareUpdater/master/License.txt)
 [![Known Vulnerabilities](https://snyk.io/test/github/SeppPenner/SoftwareUpdater/badge.svg)](https://snyk.io/test/github/SeppPenner/SoftwareUpdater)
 
-## Screenshot from the executable:
+## Screenshot from the executable
 ![Screenshot from the executable](https://github.com/SeppPenner/SoftwareUpdater/blob/master/Screenshot.png "Screenshot from the executable")
 
-## Basic usage:
+## Basic usage
 The PreferredLanguage property needs to be set to the language that is wanted.
 See the languages subfolder in the execution location (to add new languages)
 and the language manager: https://github.com/SeppPenner/CSharpLanguageManager
@@ -53,7 +53,7 @@ if they should be restarted after the update.
 </Files>
 ```
 
-## How the full configuration needs to look like (Version 1.0.0.2):
+## How the full configuration needs to look like (Version 1.0.0.2)
 The config file needs to be named "UpdateConfig.xml".
 ```xml
 <?xml version="1.0"?>
@@ -76,7 +76,7 @@ The config file needs to be named "UpdateConfig.xml".
 	</Files>
 </Config>
 ```
-## How the full configuration needs to look like (Version 1.0.0.1 and prior):
+## How the full configuration needs to look like (Version 1.0.0.1 and prior)
 The config file needs to be named "UpdateConfig.xml".
 ```xml
 <?xml version="1.0"?>
@@ -102,7 +102,7 @@ The config file needs to be named "UpdateConfig.xml".
 An example project can be found [here](https://github.com/SeppPenner/SoftwareUpdater/tree/master/Sourcecode).
 A test setup can be found [here](https://github.com/SeppPenner/SoftwareUpdater/tree/master/Testsetup).
 
-## Special advice for version 1.0.0.0:
+## Special advice for version 1.0.0.0
 If the executable is located under **C:\Program Files** or **C:\Program Files (x86)**, **ADMIN RIGHTS**
 will be needed to use the updater properly. Otherwise it will not perform an update.
 
