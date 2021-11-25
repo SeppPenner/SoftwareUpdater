@@ -1,0 +1,50 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "SoftwareUpdater/1.0.3": {
+        "dependencies": {
+          "GitVersion.MsBuild": "5.8.1",
+          "HaemmerElectronics.SeppPenner.Language": "1.0.11"
+        },
+        "runtime": {
+          "SoftwareUpdater.dll": {}
+        }
+      },
+      "GitVersion.MsBuild/5.8.1": {},
+      "HaemmerElectronics.SeppPenner.Language/1.0.11": {
+        "runtime": {
+          "lib/net6.0/Languages.dll": {
+            "assemblyVersion": "1.0.11.0",
+            "fileVersion": "1.0.11.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SoftwareUpdater/1.0.3": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "GitVersion.MsBuild/5.8.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-WR+50tZK/ZO51RhcNObEZyIN+b7jt6YQOnUdrnkDhi+kPWm00TLXIUci2hGIgE617iaWdkbmkleBbIFwPhH0oQ==",
+      "path": "gitversion.msbuild/5.8.1",
+      "hashPath": "gitversion.msbuild.5.8.1.nupkg.sha512"
+    },
+    "HaemmerElectronics.SeppPenner.Language/1.0.11": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-DL4jHJiO1M/Uy9Qa1d715iONJzGNpwOTq/jxkgCjYePk07JxX09L1XAdEqqEo0VeFWjLyiWcxAUUINkf8TD/5Q==",
+      "path": "haemmerelectronics.sepppenner.language/1.0.11",
+      "hashPath": "haemmerelectronics.sepppenner.language.1.0.11.nupkg.sha512"
+    }
+  }
+}
