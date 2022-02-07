@@ -33,7 +33,7 @@ namespace SoftwareUpdater.Implementation
         public Config ImportConfiguration(string fileName)
         {
             var xDocument = XDocument.Load(fileName);
-            return CreateObjectFromString<Config>(xDocument);
+            return CreateObjectFromString<Config>(xDocument) ?? new();
         }
 
         /// <summary>
@@ -42,10 +42,10 @@ namespace SoftwareUpdater.Implementation
         /// <typeparam name="T">The object type.</typeparam>
         /// <param name="xDocument">The X document.</param>
         /// <returns>A new object of type <see cref="T"/>.</returns>
-        private static T CreateObjectFromString<T>(XDocument xDocument)
+        private static T? CreateObjectFromString<T>(XDocument xDocument)
         {
             var xmlSerializer = new XmlSerializer(typeof(T));
-            return (T)xmlSerializer.Deserialize(new StringReader(xDocument.ToString()));
+            return (T?)xmlSerializer.Deserialize(new StringReader(xDocument.ToString()));
         }
     }
 }

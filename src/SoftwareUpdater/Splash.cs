@@ -46,32 +46,32 @@ namespace SoftwareUpdater
         /// <summary>
         /// The timer.
         /// </summary>
-        private readonly Timer timer = new Timer();
+        private readonly Timer timer = new();
 
         /// <summary>
         /// The base directory.
         /// </summary>
-        private string baseDirectory;
+        private string baseDirectory = string.Empty;
 
         /// <summary>
         /// The configuration.
         /// </summary>
-        private Config config = new Config();
+        private Config config = new();
 
         /// <summary>
         /// The language.
         /// </summary>
-        private ILanguage language;
+        private ILanguage? language;
 
         /// <summary>
         /// The splash image.
         /// </summary>
-        private string splashImage;
+        private string splashImage = string.Empty;
 
         /// <summary>
         /// The update XML.
         /// </summary>
-        private string updateXml;
+        private string updateXml = string.Empty;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Splash"/> class.
@@ -166,6 +166,11 @@ namespace SoftwareUpdater
         private void CheckAdminPrivileges()
         {
             if (IsElevated())
+            {
+                return;
+            }
+
+            if (this.language is null)
             {
                 return;
             }

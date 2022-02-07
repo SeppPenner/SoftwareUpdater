@@ -17,7 +17,7 @@ namespace SoftwareUpdater.Configuration
         /// <summary>
         /// Gets or sets the file name.
         /// </summary>
-        public string FileName { get; set; }
+        public string FileName { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets a value indicating whether the process should be started again or not.

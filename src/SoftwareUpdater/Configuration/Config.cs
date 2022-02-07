@@ -19,21 +19,21 @@ namespace SoftwareUpdater.Configuration
         /// <summary>
         /// Gets or sets the path to the latest version.
         /// </summary>
-        public string PathToLatestVersion { get; set; }
+        public string PathToLatestVersion { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the files.
         /// </summary>
-        public List<FileModel> Files { get; set; }
+        public List<FileModel> Files { get; set; } = new();
 
         /// <summary>
         /// Gets or sets the main executable.
         /// </summary>
-        public FileModel MainExecutable { get; set; }
+        public FileModel MainExecutable { get; set; } = new();
 
         /// <summary>
         /// Gets or sets the preferred language.
         /// </summary>
-        public string PreferredLanguage { get; set; }
+        public string PreferredLanguage { get; set; } = string.Empty;
     }
 }

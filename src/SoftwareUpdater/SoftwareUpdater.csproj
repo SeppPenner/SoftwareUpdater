@@ -7,6 +7,7 @@
     <ApplicationIcon>Update.ico</ApplicationIcon>
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
     <LangVersion>latest</LangVersion>
+	<Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
