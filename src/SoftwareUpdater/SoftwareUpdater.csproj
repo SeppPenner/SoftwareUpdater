@@ -8,14 +8,15 @@
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
     <LangVersion>latest</LangVersion>
 	<Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GitVersion.MsBuild" Version="5.8.1">
+    <PackageReference Include="GitVersion.MsBuild" Version="5.8.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="HaemmerElectronics.SeppPenner.Language" Version="1.0.11" />
+    <PackageReference Include="HaemmerElectronics.SeppPenner.Language" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>

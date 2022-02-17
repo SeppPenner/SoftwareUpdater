@@ -1,19 +1,27 @@
-﻿using System;
-using System.Windows.Forms;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Program.cs" company="Hämmer Electronics">
+//   Copyright (c) All rights reserved.
+// </copyright>
+// <summary>
+//   The main program.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace SoftwareUpdater
+namespace SoftwareUpdater;
+
+/// <summary>
+/// The main program.
+/// </summary>
+internal static class Program
 {
-    internal static class Program
+    /// <summary>
+    /// The main method.
+    /// </summary>
+    [STAThread]
+    private static void Main()
     {
-        /// <summary>
-        ///     Der Haupteinstiegspunkt für die Anwendung.
-        /// </summary>
-        [STAThread]
-        private static void Main()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Splash());
-        }
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
+        Application.Run(new Splash());
     }
 }
