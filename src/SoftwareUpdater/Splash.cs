@@ -127,7 +127,7 @@ public partial class Splash : Form
     private void InitializeLanguageManager()
     {
         this.languageManager.SetCurrentLanguageFromName(this.config.PreferredLanguage);
-        this.languageManager.OnLanguageChanged += this.OnLanguageChanged;
+        this.languageManager.OnLanguageChanged += this.OnLanguageChanged!;
         this.language = this.languageManager.GetCurrentLanguage();
     }
 
@@ -168,7 +168,7 @@ public partial class Splash : Form
     private void StartTimer()
     {
         this.timer.Interval = 2000;
-        this.timer.Elapsed += this.GetLatestVersion;
+        this.timer.Elapsed += this.GetLatestVersion!;
         this.timer.Start();
     }
 
