@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "SoftwareUpdater"
-#define MyAppVersion "1.0.4.0"
+#define MyAppVersion "1.0.5.0"
 #define MyAppPublisher "Hämmer Electronics"
 #define MyAppURL "http://softwareload24.de.tl/"
 #define MyAppExeName "SoftwareUpdater.exe"
