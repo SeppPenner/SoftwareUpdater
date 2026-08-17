@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <TargetFramework>net10.0-windows</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <NoWarn>NU1803</NoWarn>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <NuGetAuditMode>all</NuGetAuditMode>
+        <NuGetAudit>true</NuGetAudit>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="GitVersion.MsBuild" Version="6.8.2">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.8.1" />
+        <PackageReference Include="MSTest.TestAdapter" Version="4.3.3" />
+        <PackageReference Include="MSTest.TestFramework" Version="4.3.3" />
+        <PackageReference Include="coverlet.collector" Version="10.0.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\SoftwareUpdater\SoftwareUpdater.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <!-- The stub binary of the main project. It is linked instead of copied so that the repository does not
+             carry a second binary, and it serves as the file with a known file version in the update tests. -->
+        <None Include="..\SoftwareUpdater\MainExecutable.exe" Link="TestData\MainExecutable.exe">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+</Project>
