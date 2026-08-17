@@ -101,9 +101,6 @@ The config file needs to be named "UpdateConfig.xml".
 </Config>
 ```
 
-An example project can be found [here](https://github.com/SeppPenner/SoftwareUpdater/tree/master/Sourcecode).
-A test setup can be found [here](https://github.com/SeppPenner/SoftwareUpdater/tree/master/Testsetup).
-
 ## Special advice for version 1.0.0.0
 If the executable is located under **C:\Program Files** or **C:\Program Files (x86)**, **ADMIN RIGHTS**
 will be needed to use the updater properly. Otherwise it will not perform an update.
