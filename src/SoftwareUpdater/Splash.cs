@@ -96,8 +96,21 @@ public partial class Splash : Form
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.StackTrace, ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            this.ShowError(ex);
         }
+    }
+
+    /// <summary>
+    /// Shows an error dialog for an exception.
+    /// </summary>
+    /// <param name="ex">The exception.</param>
+    private void ShowError(Exception ex)
+    {
+        // The language manager is only initialized in LoadSplash, so the language can still be
+        // unavailable here. In that case the title falls back to a hard coded English word.
+        var title = this.language?.GetWord("ErrorTitle") ?? "Error";
+        var text = $"{ex.Message}{Environment.NewLine}{Environment.NewLine}{ex.StackTrace}";
+        MessageBox.Show(text, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
     /// <summary>

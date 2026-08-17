@@ -11,5 +11,9 @@
 			<Key>RunInAdminModeTitle</Key>
 			<Value>Please run the updater in admin mode</Value>
 		</Word>
+		<Word>
+			<Key>ErrorTitle</Key>
+			<Value>Error</Value>
+		</Word>
 	</Words>
 </Language>
