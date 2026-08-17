@@ -1,5 +1,6 @@
 # Change history
 
+* **Version 1.0.8.0 (2026-08-17)** : Updated NuGet packages, moved to Net 10.0, fixed the swapped text and title in the error message box, fixed the update check for files without version information, added a test project, publish the setup content self contained.
 * **Version 1.0.7.0 (2025-01-09)** : Updated Nuget packages, added audit mode, moved to Net9.0.
 * **Version 1.0.6.0 (2024-01-04)** : Updated nuget packages, moved to Net 8.0.
 * **Version 1.0.5.0 (2022-12-06)** : Updated nuget packages, moved to Net 7.0.
