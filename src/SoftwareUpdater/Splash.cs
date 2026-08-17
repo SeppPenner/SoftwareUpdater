@@ -20,6 +20,11 @@ public partial class Splash : Form
     private readonly IGetConfig configLoader = new GetConfig();
 
     /// <summary>
+    /// The file updater.
+    /// </summary>
+    private readonly IFileUpdater fileUpdater = new FileUpdater();
+
+    /// <summary>
     /// The language manager.
     /// </summary>
     private readonly ILanguageManager languageManager = new LanguageManager();
@@ -210,59 +215,12 @@ public partial class Splash : Form
     /// </summary>
     private void CopyFilesIfNecessary()
     {
-        this.CopySingleFileIfNecessary(this.config.MainExecutable);
+        this.fileUpdater.CopyFileIfNecessary(this.baseDirectory, this.config.PathToLatestVersion, this.config.MainExecutable);
 
         foreach (var file in this.config.Files)
         {
-            this.CopySingleFileIfNecessary(file);
+            this.fileUpdater.CopyFileIfNecessary(this.baseDirectory, this.config.PathToLatestVersion, file);
         }
-    }
-
-    /// <summary>
-    /// Copies the single file if necessary.
-    /// </summary>
-    /// <param name="file">The file.</param>
-    private void CopySingleFileIfNecessary(FileModel file)
-    {
-        if (!this.NewFileVersionExists(file))
-        {
-            return;
-        }
-
-        this.CopyFile(file);
-    }
-
-    /// <summary>
-    /// Checks whether a new file exists.
-    /// </summary>
-    /// <param name="file">The file.</param>
-    /// <returns><c>true</c> if a new file exists, <c>false</c> else.</returns>
-    private bool NewFileVersionExists(FileModel file)
-    {
-        var oldFile = Path.Combine(this.baseDirectory, file.FileName);
-        var newFile = Path.Combine(this.config.PathToLatestVersion, file.FileName);
-        var oldFileInfo = FileVersionInfo.GetVersionInfo(oldFile).FileVersion;
-        var newFileInfo = FileVersionInfo.GetVersionInfo(newFile).FileVersion;
-
-        if (oldFileInfo == null || newFileInfo == null)
-        {
-            return false;
-        }
-
-        return !oldFileInfo.Equals(newFileInfo) &&
-               !File.GetLastWriteTime(oldFile).Equals(File.GetLastWriteTime(newFile));
-    }
-
-    /// <summary>
-    /// Copies a file.
-    /// </summary>
-    /// <param name="file">The file.</param>
-    private void CopyFile(FileModel file)
-    {
-        var currentFile = Path.Combine(this.baseDirectory, file.FileName);
-        var newFile = Path.Combine(this.config.PathToLatestVersion, file.FileName);
-        File.Delete(currentFile);
-        File.Copy(newFile, currentFile);
     }
 
     /// <summary>
