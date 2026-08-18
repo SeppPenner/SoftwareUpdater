@@ -8,8 +8,10 @@ the update is done. It shows a splash screen, compares the files listed in `Upda
 against a copy on a share, replaces the outdated ones, starts the application again and exits.
 
 The repository is an application, it is **not** published as a NuGet package: no
-`GeneratePackageOnBuild`, no push script. It ships as an Inno Setup installer that is committed
-into `Setup/`.
+`GeneratePackageOnBuild`, no push script. It ships as an Inno Setup installer that is built from
+`Setup/SoftwareUpdater-Setup.iss` and attached to the GitHub release of the version tag. Up to and
+including version 1.0.8 the installer was committed into `Setup/` instead, which is why the git
+history carries one copy per release.
 
 One solution `src/SoftwareUpdater.sln` with exactly one project:
 
@@ -120,9 +122,11 @@ Do not silently "clean up" these, they are existing behaviour:
   identical stub binaries of 367616 bytes with file version `1.0.0.1`, and `Changelog.txt` contains
   the single line `Example Changelog`. They exist so that `UpdateConfig.xml` points at something
   that is actually there. They are never started by the repository itself.
-- **Committed binaries despite `.gitignore`.** The ignore file excludes `*.exe`, `[Bb]in` and
-  `[Pp]ublish/`, yet `Setup/SoftwareUpdater-Setup.exe`, `MainExecutable.exe` and `SecondExe.exe`
-  are tracked. They were added with `git add -f` and have to be updated the same way.
+- **Committed binaries despite `.gitignore`.** The ignore file excludes `*.exe`, yet
+  `MainExecutable.exe` and `SecondExe.exe` are tracked. They were added with `git add -f` and have
+  to be updated the same way. They are payload of the example configuration and change about never.
+  The installer is **not** in that group any more, see "Releasing". Do not add it back with
+  `git add -f`, it is 36 MB per release and stays in the history forever.
 - **`PreferredLanguage` is the language name, not the culture.** `SetCurrentLanguageFromName` from
   `HaemmerElectronics.SeppPenner.Language` compares against the `<Name>` element of the language
   files, so the valid values are `Deutsch` and `English (US)`, not `de-DE` and `en-US`. An unknown
@@ -171,12 +175,31 @@ Do not silently "clean up" these, they are existing behaviour:
 6. Run `Setup/build-setup-files.bat`, then compile `Setup/SoftwareUpdater-Setup.iss` with
    `ISCC.exe`. The tag has to exist before this step, otherwise GitVersion burns a prerelease
    version into the shipped executable.
-7. `git add -f Setup/SoftwareUpdater-Setup.exe` and commit the installer.
-8. Push the commits and the tag.
+7. Push the commits and the tag.
+8. Attach `Setup/SoftwareUpdater-Setup.exe` to the GitHub release of that tag. **Never commit the
+   installer.** It is self contained and weighs 36 MB, and every committed copy stays in the
+   history for good. `Setup/` is the `OutputDir` of the Inno Setup script, so the file lands there
+   during the build and is ignored by `.gitignore` afterwards.
 
 The version in the `Changelog.md` has four parts (`1.0.8.0`), the tag has three (`1.0.8`).
 GitVersion turns the tag into the assembly version, so an untagged commit produces something like
 `1.0.8-1+Branch.master.Sha...`.
+
+For step 8 there is no `gh` on this machine. The GitHub API does the job, with the token that
+`git push` already uses, so nothing has to be stored anywhere:
+
+```bash
+c=$(printf "protocol=https\nhost=github.com\n\n" | git credential fill)
+tok=$(printf "%s" "$c" | grep '^password=' | cut -d= -f2-)
+id=$(curl -s -X POST -H "Authorization: Bearer $tok" \
+  https://api.github.com/repos/SeppPenner/SoftwareUpdater/releases \
+  -d '{"tag_name":"1.0.9","name":"1.0.9"}' | grep -m1 '"id"' | tr -dc 0-9)
+curl -s -X POST -H "Authorization: Bearer $tok" -H "Content-Type: application/octet-stream" \
+  --data-binary @Setup/SoftwareUpdater-Setup.exe \
+  "https://uploads.github.com/repos/SeppPenner/SoftwareUpdater/releases/$id/assets?name=SoftwareUpdater-Setup.exe"
+```
+
+Never print that token, and never write it into a file.
 
 `Setup/build-setup-files.bat` deletes every `bin` and `obj` below `src`, publishes self contained
 for `win-x64` into `src/SoftwareUpdater/bin/publish` and removes the `*.pdb` files. In an
